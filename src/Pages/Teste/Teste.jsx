@@ -13,6 +13,8 @@ export default function Teste() {
 
     const result = number1 * number2;
 
+    console.log(number1, number2, result, response);
+
     function sortNumbers() {
         setNumber1(Math.floor(Math.random() * 10) + 1);
         setNumber2(Math.floor(Math.random() * 10) + 1);
@@ -50,7 +52,7 @@ export default function Teste() {
             <form onSubmit={checkResponse}>
                 <input
                     value={response}
-                    onChange={(e) => setResponse(e.target.value)}
+                    onChange={(e) => setResponse(parseInt(e.target.value))}
                     type="number"
                 />
             </form>
