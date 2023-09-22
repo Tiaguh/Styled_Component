@@ -5,19 +5,17 @@ import iconPlay from './img/play.png';
 
 import { AiFillClockCircle } from "react-icons/ai";
 import { IoClose } from "react-icons/io5";
+import { BsArrowRepeat } from 'react-icons/bs'
 
 export default function Teste() {
     const [started, setStarted] = useState(false);
     // Controlar se o jogo já começou.
 
-    const [countdown, setCountdown] = useState(30);
+    const [countdown, setCountdown] = useState('');
     // Controla o tempo das partidas.
 
     const [number1, setNumber1] = useState(0);
     const [number2, setNumber2] = useState(0);
-
-    console.log(number1, number2);
-
     // Números sorteados.
 
     const result = number1 * number2;
@@ -25,6 +23,8 @@ export default function Teste() {
 
     const [response, setResponse] = useState('');
     // Resposta do usuário.
+
+    const [isInputDisabled, setIsInputDisabled] = useState(false);
 
     const [changeClassName, setChangeClassName] = useState(true);
     // Muda a classe do input. 
@@ -39,6 +39,8 @@ export default function Teste() {
                     setCountdown(countdown - 1);
                 } else {
                     clearInterval(countdownInterval);
+                    // setStarted(false);
+                    setIsInputDisabled(true)
                 }
             }, 1000);
             return () => clearInterval(countdownInterval);
@@ -55,6 +57,8 @@ export default function Teste() {
         setStarted(true);
         sortNumbers();
         setResponse('');
+        setCountdown(30)
+        setIsInputDisabled(false)
     }
 
     function checkResponse(e) {
@@ -112,11 +116,24 @@ export default function Teste() {
                                 onChange={(e) => setResponse(parseInt(e.target.value))}
                                 type="number"
                                 className={changeClassName ? 'input-correct' : 'input-uncorrect'}
+                                disabled={isInputDisabled}
                             />
 
                         </form>
 
+                        <button onClick={handleStart}>
+                            <BsArrowRepeat size={60} color="#F5CB5C" />
+                        </button>
+
                     </div>
+
+                    {countdown === 0 ? (
+                        <div className="time-is-over-container">
+                            <p>Tempo esgotado!</p>
+                        </div>
+                    ) : (
+                        <div className="time-is-over-container" />
+                    )}
 
                 </div>
             ) : (

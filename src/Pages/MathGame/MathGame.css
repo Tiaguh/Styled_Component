@@ -67,6 +67,12 @@ header h2 {
     gap: 35px
 }
 
+.content button {
+    background-color: transparent;
+
+    border: none;
+}
+
 form .input-correct {
     width: 150px;
 
@@ -144,6 +150,21 @@ form .input-uncorrect {
     font-size: 40px;
     font-weight: 500;
     color: #F5CB5C;
+
+    font-family: sans-serif;
+}
+
+.time-is-over-container {
+    width: 100%;
+    height: 10%;
+
+    display: flex;
+    justify-content: center;
+}
+
+.time-is-over-container p {
+    font-size: 20px;
+    color: #FFF;
 
     font-family: sans-serif;
 }
