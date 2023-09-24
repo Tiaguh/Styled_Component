@@ -58,6 +58,24 @@ export default function Teste() {
         }
     }, [started]);
 
+    useEffect(() => {
+        // Adicione um event listener para o evento 'keydown' no documento.
+        const handleKeyDown = (event) => {
+            // Verifique se o jogo já começou e se a tecla pressionada é a tecla de espaço.
+            if (started && event.key === ' ') {
+                handleStart();
+            }
+        };
+
+        // Adicione o event listener quando o componente for montado.
+        document.addEventListener('keydown', handleKeyDown);
+
+        // Remova o event listener quando o componente for desmontado.
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [started]);
+
     function sortNumbers() {
         setNumber1(Math.floor(Math.random() * 10) + 1);
         setNumber2(Math.floor(Math.random() * 10) + 1);
@@ -66,13 +84,14 @@ export default function Teste() {
             setIsInputDisabled(true);
         }
     }
+
     // Sorteio dos números.
 
     function handleStart() {
         setStarted(true);
         sortNumbers();
         setResponse('');
-        setCountdown(3)
+        setCountdown(30)
         setIsInputDisabled(false);
         setScore(0);
     }
@@ -138,9 +157,13 @@ export default function Teste() {
 
                         </form>
 
-                        <button onClick={handleStart}>
-                            <BsArrowRepeat size={60} color="#F5CB5C" />
-                        </button>
+                        <div className='container-restart' >
+                            <button onClick={handleStart}>
+                                <BsArrowRepeat size={65} color="#F5CB5C" />
+                            </button>
+
+                            <p>( Space to Restart! )</p>
+                        </div>
 
                     </div>
 

@@ -139,6 +139,28 @@ form .input-uncorrect {
     }
 }
 
+.container-restart {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 5px;
+}
+
+.container-restart button {
+    cursor: pointer;
+}
+
+.container-restart p {
+    font-size: 13px;
+    font-weight: 500;
+    color: #F5CB5C;
+
+    font-family: sans-serif;
+}
+
 .question {
     display: flex;
     align-items: center;
@@ -147,7 +169,7 @@ form .input-uncorrect {
 }
 
 .question p {
-    font-size: 40px;
+    font-size: 42px;
     font-weight: 500;
     color: #F5CB5C;
 
