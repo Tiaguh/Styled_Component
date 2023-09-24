@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './MathGame.css';
 
 import iconPlay from './img/play.png';
@@ -25,6 +25,7 @@ export default function Teste() {
     // Resposta do usuário.
 
     const [isInputDisabled, setIsInputDisabled] = useState(false);
+    const inputRef = useRef(null);
 
     const [changeClassName, setChangeClassName] = useState(true);
     // Muda a classe do input. 
@@ -33,23 +34,37 @@ export default function Teste() {
     const [score, setScore] = useState(0)
 
     useEffect(() => {
+        let countdownInterval;
         if (started) {
-            const countdownInterval = setInterval(() => {
+            countdownInterval = setInterval(() => {
                 if (countdown > 0) {
                     setCountdown(countdown - 1);
                 } else {
                     clearInterval(countdownInterval);
-                    // setStarted(false);
-                    setIsInputDisabled(true)
+                    setIsInputDisabled(true);
                 }
             }, 1000);
-            return () => clearInterval(countdownInterval);
+        } else {
+            clearInterval(countdownInterval);
         }
+
+        return () => clearInterval(countdownInterval);
     }, [started, countdown]);
+
+
+    useEffect(() => {
+        if (started && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [started]);
 
     function sortNumbers() {
         setNumber1(Math.floor(Math.random() * 10) + 1);
         setNumber2(Math.floor(Math.random() * 10) + 1);
+
+        if (countdown === 0) {
+            setIsInputDisabled(true);
+        }
     }
     // Sorteio dos números.
 
@@ -57,8 +72,9 @@ export default function Teste() {
         setStarted(true);
         sortNumbers();
         setResponse('');
-        setCountdown(30)
-        setIsInputDisabled(false)
+        setCountdown(3)
+        setIsInputDisabled(false);
+        setScore(0);
     }
 
     function checkResponse(e) {
@@ -112,6 +128,7 @@ export default function Teste() {
                         <form onSubmit={checkResponse}>
 
                             <input
+                                ref={inputRef}
                                 value={response}
                                 onChange={(e) => setResponse(parseInt(e.target.value))}
                                 type="number"
